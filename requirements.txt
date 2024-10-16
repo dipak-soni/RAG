@@ -1,0 +1,9 @@
+langchain
+langchain-community
+langchain-openai
+langchain-huggingface
+pypdf
+pinecone
+streamlit
+streamlit-chat
+
