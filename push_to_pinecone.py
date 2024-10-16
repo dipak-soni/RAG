@@ -5,10 +5,12 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Pinecone
 from pinecone import Pinecone as PineconeClient
 import os
-os.environ["OPENAI_API_KEY"]='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'
-os.environ['PINECONE_API_KEY']='1b7fb9bd-104f-41ce-b2b4-12c763b5b1eb'
-# Path to a single PDF file
-pdf_file_path = 'simple_resume.pdf'
+from dotenv import load_dotenv
+load_dotenv()
+OPENAI_API_KEY=os.getenv["OPENAI_API_KEY"]
+PINECONE_API_KEY=os.getenv['PINECONE_API_KEY']
+PINECONE_REGION=os.getenv['PINECONE_REGION']
+PINECONE_INDEX_NAME=os.getenv['PINECONE_INDEX_NAME']
 
 # Initialize the PDF loader
 # loader = PyPDFLoader(pdf_file_path)
@@ -39,9 +41,8 @@ embeddings=OpenAIEmbeddings()
 
 
 # insert document splits to pinecone 
-pc=PineconeClient(api_key=os.environ['PINECONE_API_KEY'],environment='us-east-1')    # it is just for creating connection 
-index='lawpdf'
-index=Pinecone.from_documents(splits,embeddings,index_name=index)    # returns pinecone object
+pc=PineconeClient(api_key=PINECONE_API_KEY,environment=PINECONE_REGION)    # it is just for creating connection 
+index=Pinecone.from_documents(splits,embeddings,index_name=PINECONE_INDEX_NAME)    # returns pinecone object
 
 
 

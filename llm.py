@@ -4,7 +4,7 @@ from langchain.chains import ConversationChain,LLMChain
 from langchain.memory import ConversationBufferMemory
 import os
 from get_from_pinecone import get_context
-os.environ['COHERE_API_KEY']='C8buajOpTJaqrmm4cF9kKswk7RbRPnstQy0sQFjh'
+COHERE_API_KEY=os.getenv['COHERE_API_KEY']
 
 def get_response(user_query):
     

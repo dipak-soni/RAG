@@ -2,13 +2,17 @@ from langchain_pinecone import PineconeVectorStore
 import os
 from langchain_community.embeddings import OpenAIEmbeddings
 from pinecone import Pinecone 
+from dotenv import load_dotenv
+load_dotenv()
 
-os.environ["OPENAI_API_KEY"]='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'
-os.environ['PINECONE_API_KEY']='1b7fb9bd-104f-41ce-b2b4-12c763b5b1eb'
+OPENAI_API_KEY=os.getenv["OPENAI_API_KEY"]
+PINECONE_API_KEY=os.getenv['PINECONE_API_KEY']
+PINECONE_REGION=os.getenv['PINECONE_REGION']
+PINECONE_INDEX_NAME=os.getenv['PINECONE_INDEX_NAME']
 
 def get_context(query):
-    pc=Pinecone(api_key=os.environ['PINECONE_API_KEY'],environment='us-east-1')    # it is just for creating connection 
-    index_name='lawpdf'
+    pc=Pinecone(api_key=PINECONE_API_KEY,environment=PINECONE_REGION)    # it is just for creating connection 
+    index_name=PINECONE_INDEX_NAME
     index=pc.Index(name=index_name)
     print(index.describe_index_stats())
 
