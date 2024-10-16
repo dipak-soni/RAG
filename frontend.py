@@ -34,6 +34,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+
+
 # Accept user input
 if prompt := st.chat_input("What is up?"):
     # Add user message to chat history
@@ -42,6 +44,8 @@ if prompt := st.chat_input("What is up?"):
     with st.chat_message("user"):
         st.markdown(prompt)
     with st.chat_message("assistant"):
-        stream = get_response(prompt)
-        response = st.markdown(stream)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+        stream = get_response(prompt,st.session_state['messages'])
+        st.session_state.messages.append({"role": "assistant", "content": stream})
+        response = st.write(st.session_state.messages[-1]['content'])
+        print(st.session_state['messages']) 
+    

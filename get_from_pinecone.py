@@ -5,10 +5,10 @@ from pinecone import Pinecone
 from dotenv import load_dotenv
 load_dotenv()
 
-OPENAI_API_KEY=os.getenv["OPENAI_API_KEY"]
-PINECONE_API_KEY=os.getenv['PINECONE_API_KEY']
-PINECONE_REGION=os.getenv['PINECONE_REGION']
-PINECONE_INDEX_NAME=os.getenv['PINECONE_INDEX_NAME']
+OPENAI_API_KEY=os.getenv("OPENAI_API_KEY")
+PINECONE_API_KEY=os.getenv('PINECONE_API_KEY')
+PINECONE_REGION=os.getenv('PINECONE_REGION')
+PINECONE_INDEX_NAME=os.getenv('PINECONE_INDEX_NAME')
 
 def get_context(query):
     pc=Pinecone(api_key=PINECONE_API_KEY,environment=PINECONE_REGION)    # it is just for creating connection 
@@ -20,7 +20,7 @@ def get_context(query):
     vector_store = PineconeVectorStore(index=index, embedding=embeddings)
 
     results = vector_store.similarity_search(
-        "what is the percentage I got in 10th?",
+        query,
         k=1,
     )
     
