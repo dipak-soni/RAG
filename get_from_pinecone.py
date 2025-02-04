@@ -1,11 +1,11 @@
 from langchain_pinecone import PineconeVectorStore
 import os
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings,CohereEmbeddings
 from pinecone import Pinecone 
 from dotenv import load_dotenv
 load_dotenv()
 
-OPENAI_API_KEY=os.getenv("OPENAI_API_KEY")
+COHERE_API_KEY=os.getenv('COHERE_API_KEY')
 PINECONE_API_KEY=os.getenv('PINECONE_API_KEY')
 PINECONE_REGION=os.getenv('PINECONE_REGION')
 PINECONE_INDEX_NAME=os.getenv('PINECONE_INDEX_NAME')
@@ -16,17 +16,19 @@ def get_context(query):
     index=pc.Index(name=index_name)
     print(index.describe_index_stats())
 
-    embeddings=OpenAIEmbeddings()
+    embeddings=CohereEmbeddings(cohere_api_key=COHERE_API_KEY,user_agent='rag')
     vector_store = PineconeVectorStore(index=index, embedding=embeddings)
 
     results = vector_store.similarity_search(
         query,
-        k=1,
+        k=5,
     )
-    
+    print(results)
+ 
     context=results[0].page_content
     print(context)
     return context
+
     # query='what percentage I got in 10th class?'
     # embed_query=embeddings.embed_query(query)
     # print(embed_query)
